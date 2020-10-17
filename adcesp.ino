@@ -1,6 +1,7 @@
-const byte interruptPin = 19;
-int analog_value = 0;
-#define ANALOG_PIN_0 36
+const byte interruptPin = 18;
+int analogValue = 0;
+bool flag = 0;
+#define analogPin 36
  
 void setup(){
   Serial.begin(115200);
@@ -12,10 +13,13 @@ void setup(){
  
 void loop(){
   delay(500);
-  Serial.println(map(analog_value, 0, 4095, 0, 1023));
+  if(flag == 1){
+    analogValue = analogRead(analogPin);
+    Serial.println(map(analogValue, 0, 4095, 0, 1023));
+    flag = 0;
+  }
 }
 
 void interruptFunction(){
-//delayMicroseconds(3);
-analog_value = analogRead(ANALOG_PIN_0);
+  flag = 1;
 }
