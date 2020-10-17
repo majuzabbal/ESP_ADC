@@ -1,6 +1,7 @@
 const byte interruptPin = 3;
-int analog_value = 0;
-#define ANALOG_PIN_0 A3
+int analogValue = 0;
+bool flag = 0;
+#define analogPin A3
 
 void setup() {
   Serial.begin(115200);
@@ -13,9 +14,13 @@ void setup() {
 
 void loop() {
   delay(500);
-  Serial.println(analog_value);
+  if(flag == 1){
+    analogValue = analogRead(analogPin);
+    Serial.println(analogValue);
+    flag = 0;
+  }
 }
 
 void interruptFunction() {
-analog_value = analogRead(ANALOG_PIN_0);
+  flag = 1;
 }
