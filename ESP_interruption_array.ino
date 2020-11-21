@@ -1,21 +1,23 @@
 int analogPin = 36;
 int interruptPin = 34;  
-int val[6];
+int val[7];
 int count = 0;
 int value = 0;
-volatile bool flag = LOW;
+volatile bool flag = false;
 
 void setup() {
   Serial.begin(9600);
   attachInterrupt(digitalPinToInterrupt(interruptPin), interruptFunction, RISING);
+  Serial.println("Olá");
 }
 
 void loop() {
   while (count < 7) {
-      if(flag){
+    if(flag){
       val[count] = analogRead(analogPin);
       count++;
-      flag = LOW;
+      flag = false;
+      Serial.println(count);
     }
   }
 
@@ -25,5 +27,5 @@ void loop() {
 }
 
 void interruptFunction() {
-  flag = HIGH;
+  flag = true;
 }
